@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bytebank.Web.Infra;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace Bytebank.Web
     {
         static void Main(string[] args)
         {
+            var app = new WebApplication(new string[] { "http://localhost:54321/" });
+            app.Iniciar();
         }
     }
 }
