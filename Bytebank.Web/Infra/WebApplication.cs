@@ -37,17 +37,25 @@ namespace Bytebank.Web.Infra
             if (path == "/Assets/css/styles.css")
             {
                 var assembly = Assembly.GetExecutingAssembly();
-                var resource = "Bytebank.Web.Assets.css.styles.css";
+                var resource = Utilities.PathToAssemblyConverter(path);
                 var resourceStream = assembly.GetManifestResourceStream(resource);
-                var resourceBytes = new Byte[resourceStream.Length];
-                resourceStream.Read(resourceBytes, 0, (int)resourceStream.Length);
-                response.StatusCode = 200;
-                response.ContentType = "text/css";
-                response.ContentLength64 = resourceBytes.Length;
-                response.OutputStream.Write(resourceBytes, 0, resourceBytes.Length);
-                response.OutputStream.Close();
-
-            } else
+                if (resourceStream == null)
+                {
+                    response.StatusCode = 404;
+                    response.OutputStream.Close();
+                }
+                else
+                {
+                    var resourceBytes = new Byte[resourceStream.Length];
+                    resourceStream.Read(resourceBytes, 0, (int)resourceStream.Length);
+                    response.StatusCode = 200;
+                    response.ContentType = "text/css";
+                    response.ContentLength64 = resourceBytes.Length;
+                    response.OutputStream.Write(resourceBytes, 0, resourceBytes.Length);
+                    response.OutputStream.Close();
+                }
+            }
+            else
             {
                 var respText = "Hello World!";
                 var repoBytes = Encoding.UTF8.GetBytes(respText);
