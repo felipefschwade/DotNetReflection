@@ -12,5 +12,13 @@ namespace Bytebank.Web.Infra
         {
             return $"Bytebank.Web{path.Replace('/', '.')}";
         }
+
+        public static string GetContentTypeFor(string path)
+        {
+            if (path.EndsWith(".css")) return "text/css";
+            if (path.EndsWith(".js")) return "application/js";
+            if (path.EndsWith(".html")) return "text/html";
+            throw new NotImplementedException("Formato Inválido.");
+        }
     }
 }

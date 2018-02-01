@@ -49,7 +49,7 @@ namespace Bytebank.Web.Infra
                     var resourceBytes = new Byte[resourceStream.Length];
                     resourceStream.Read(resourceBytes, 0, (int)resourceStream.Length);
                     response.StatusCode = 200;
-                    response.ContentType = "text/css";
+                    response.ContentType = Utilities.GetContentTypeFor(path);
                     response.ContentLength64 = resourceBytes.Length;
                     response.OutputStream.Write(resourceBytes, 0, resourceBytes.Length);
                     response.OutputStream.Close();
