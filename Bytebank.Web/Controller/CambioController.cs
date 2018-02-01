@@ -20,7 +20,7 @@ namespace Bytebank.Web.Controller
         public string MXN()
         {
             var finalValue = _service.Calculate("MXN", "BRL", 1);
-            var resourcePath = "Bytebank.Web.View.MXN.html";
+            var resourcePath = "Bytebank.Web.View.Cambio.MXN.html";
             var assembly = Assembly.GetExecutingAssembly();
             var resourceStream = assembly.GetManifestResourceStream(resourcePath);
             var readStream = new StreamReader(resourceStream);
@@ -31,7 +31,14 @@ namespace Bytebank.Web.Controller
 
         public string USD()
         {
-            return null;
+            var finalValue = _service.Calculate("USD", "BRL", 1);
+            var resourcePath = "Bytebank.Web.View.Cambio.USD.html";
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceStream = assembly.GetManifestResourceStream(resourcePath);
+            var readStream = new StreamReader(resourceStream);
+            var text = readStream.ReadToEnd();
+
+            return text.Replace("FINAL_VALUE", finalValue.ToString());
         }
     }
 }

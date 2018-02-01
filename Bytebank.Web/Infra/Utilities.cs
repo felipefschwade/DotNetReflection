@@ -17,8 +17,16 @@ namespace Bytebank.Web.Infra
         {
             if (path.EndsWith(".css")) return "text/css";
             if (path.EndsWith(".js")) return "application/js";
-            if (path.EndsWith(".html")) return "text/html";
+            if (path.EndsWith(".html")) return "text/html; charset=utf-8";
             throw new NotImplementedException("Formato Inválido.");
         }
+
+        public static bool IsFile(string path)
+        {
+            var splitedPath = path.Split(new char['/'], StringSplitOptions.RemoveEmptyEntries);
+            var lastPart = splitedPath.Last();
+            return lastPart.Contains(".");
+        }
+
     }
 }

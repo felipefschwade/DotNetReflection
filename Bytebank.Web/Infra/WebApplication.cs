@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bytebank.Web.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -34,7 +35,7 @@ namespace Bytebank.Web.Infra
 
             var path = request.Url.AbsolutePath;
 
-            if (path == "/Assets/css/styles.css")
+            if (Utilities.IsFile(path))
             {
                 var assembly = Assembly.GetExecutingAssembly();
                 var resource = Utilities.PathToAssemblyConverter(path);
@@ -55,16 +56,29 @@ namespace Bytebank.Web.Infra
                     response.OutputStream.Close();
                 }
             }
-            else
+            else if (path == "/Cambio/MXN")
             {
-                var respText = "Hello World!";
-                var repoBytes = Encoding.UTF8.GetBytes(respText);
+                var controller = new CambioController();
+                var actionContent = controller.MXN();
+
+                var resourceBytes = Encoding.UTF8.GetBytes(actionContent);
+                response.OutputStream.Write(resourceBytes, 0, resourceBytes.Length);
                 response.StatusCode = 200;
-                response.ContentType = "text/html";
-                response.ContentLength64 = repoBytes.Length;
-                response.OutputStream.Write(repoBytes, 0, repoBytes.Length);
+                response.ContentType = "text/html; charset=utf-8";
                 response.OutputStream.Close();
             }
+            else if (path == "/Cambio/USD")
+            {
+                var controller = new CambioController();
+                var actionContent = controller.USD();
+
+                var resourceBytes = Encoding.UTF8.GetBytes(actionContent);
+                response.OutputStream.Write(resourceBytes, 0, resourceBytes.Length);
+                response.StatusCode = 200;
+                response.ContentType = "text/html; charset=utf-8";
+                response.OutputStream.Close();
+            }
+
             listener.Stop();
         }
     }
