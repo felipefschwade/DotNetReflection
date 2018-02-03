@@ -37,24 +37,8 @@ namespace Bytebank.Web.Infra
 
             if (Utilities.IsFile(path))
             {
-                var assembly = Assembly.GetExecutingAssembly();
-                var resource = Utilities.PathToAssemblyConverter(path);
-                var resourceStream = assembly.GetManifestResourceStream(resource);
-                if (resourceStream == null)
-                {
-                    response.StatusCode = 404;
-                    response.OutputStream.Close();
-                }
-                else
-                {
-                    var resourceBytes = new Byte[resourceStream.Length];
-                    resourceStream.Read(resourceBytes, 0, (int)resourceStream.Length);
-                    response.StatusCode = 200;
-                    response.ContentType = Utilities.GetContentTypeFor(path);
-                    response.ContentLength64 = resourceBytes.Length;
-                    response.OutputStream.Write(resourceBytes, 0, resourceBytes.Length);
-                    response.OutputStream.Close();
-                }
+                var manipulator = new FileRequestManipulator();
+                manipulator.Manipulate(response, path);
             }
             else if (path == "/Cambio/MXN")
             {
