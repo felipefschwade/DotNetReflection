@@ -40,27 +40,10 @@ namespace Bytebank.Web.Infra
                 var manipulator = new FileRequestManipulator();
                 manipulator.Manipulate(response, path);
             }
-            else if (path == "/Cambio/MXN")
+            else
             {
-                var controller = new CambioController();
-                var actionContent = controller.MXN();
-
-                var resourceBytes = Encoding.UTF8.GetBytes(actionContent);
-                response.OutputStream.Write(resourceBytes, 0, resourceBytes.Length);
-                response.StatusCode = 200;
-                response.ContentType = "text/html; charset=utf-8";
-                response.OutputStream.Close();
-            }
-            else if (path == "/Cambio/USD")
-            {
-                var controller = new CambioController();
-                var actionContent = controller.USD();
-
-                var resourceBytes = Encoding.UTF8.GetBytes(actionContent);
-                response.OutputStream.Write(resourceBytes, 0, resourceBytes.Length);
-                response.StatusCode = 200;
-                response.ContentType = "text/html; charset=utf-8";
-                response.OutputStream.Close();
+                var manipulator = new ControllerRequestManipulator();
+                manipulator.Manipulate(response, path);
             }
 
             listener.Stop();
