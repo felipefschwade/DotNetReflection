@@ -1,4 +1,5 @@
 ﻿using Bytebank.Services.Cambio;
+using Bytebank.Web.Infra;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Bytebank.Web.Controller
 {
-    public class CambioController
+    public class CambioController : ControllerBase
     {
         private readonly ICambioService _service;
 
@@ -20,23 +21,14 @@ namespace Bytebank.Web.Controller
         public string MXN()
         {
             var finalValue = _service.Calculate("MXN", "BRL", 1);
-            var resourcePath = "Bytebank.Web.View.Cambio.MXN.html";
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceStream = assembly.GetManifestResourceStream(resourcePath);
-            var readStream = new StreamReader(resourceStream);
-            var text = readStream.ReadToEnd();
-
+            var text = View();
             return text.Replace("FINAL_VALUE", finalValue.ToString());
         }
 
         public string USD()
         {
             var finalValue = _service.Calculate("USD", "BRL", 1);
-            var resourcePath = "Bytebank.Web.View.Cambio.USD.html";
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceStream = assembly.GetManifestResourceStream(resourcePath);
-            var readStream = new StreamReader(resourceStream);
-            var text = readStream.ReadToEnd();
+            var text = View();
 
             return text.Replace("FINAL_VALUE", finalValue.ToString());
         }

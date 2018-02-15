@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\CambioController.cs" />
+    <Compile Include="Infra\ControllerBase.cs" />
     <Compile Include="Infra\ControllerRequestManipulator.cs" />
     <Compile Include="Infra\FileRequestManipulator.cs" />
     <Compile Include="Infra\Utilities.cs" />
