@@ -32,5 +32,17 @@ namespace Bytebank.Web.Controller
 
             return text.Replace("FINAL_VALUE", finalValue.ToString());
         }
+
+        public string Calculate(string originCurency, string destinyCurency, decimal value)
+        {
+            var finalValue = _service.Calculate(originCurency, destinyCurency, value);
+            var text = View();
+
+            return text.Replace("FINAL_VALUE", finalValue.ToString())
+                .Replace("VALUE", value.ToString())
+                .Replace("ORIGIN_CURENCY", originCurency)
+                .Replace("DESTINY_CURENCY", destinyCurency);
+        }
+
     }
 }
