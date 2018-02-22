@@ -44,5 +44,6 @@ namespace Bytebank.Web.Controller
                 .Replace("DESTINY_CURENCY", destinyCurency);
         }
 
+        public string Calculate(string destinyCurency, decimal value) => Calculate("BRL", destinyCurency, value);
     }
 }
