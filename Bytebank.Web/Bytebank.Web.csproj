@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Controller\CambioController.cs" />
     <Compile Include="Infra\Binding\ActionBinder.cs" />
+    <Compile Include="Infra\Binding\ActionBindInfo.cs" />
     <Compile Include="Infra\Binding\ArgumentNameAndValue.cs" />
     <Compile Include="Infra\ControllerBase.cs" />
     <Compile Include="Infra\ControllerRequestManipulator.cs" />
@@ -72,7 +73,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="View\Cambio\Calculo.html" />
+    <EmbeddedResource Include="View\Cambio\Calculate.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

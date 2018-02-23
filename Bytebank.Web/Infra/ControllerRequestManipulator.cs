@@ -22,8 +22,8 @@ namespace Bytebank.Web.Infra
             // Dessa forma para acessar a instância de fato, é necessário utilizar o método Unwrap
             var controllerWrapper = Activator.CreateInstance("Bytebank.Web", controllerPath, new object[0]);
             var controller = controllerWrapper.Unwrap();
-            var methodInfo = _actionBinder.GetMethodInfo(controller, path);
-            var actionResult = (string)methodInfo.Invoke(controller, new object[0]);
+            var methodInfo = _actionBinder.GetActionBindInfo(controller, path);
+            var actionResult = (string)methodInfo.Invoke(controller);
             var resourceBytes = Encoding.UTF8.GetBytes(actionResult);
             response.OutputStream.Write(resourceBytes, 0, resourceBytes.Length);
             response.StatusCode = 200;
